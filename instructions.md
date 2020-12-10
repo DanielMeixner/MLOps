@@ -277,7 +277,7 @@
 1. Add your AKS Cluster as a resource to the Environment.
 1. Configure your environment to require manual approval before a deployment happens.
 1. Add a folder "deployment".
-1. Add the file model-deployment found in this repository in the folder deployment.
+1. Add the file model-deployment.yaml found here https://raw.githubusercontent.com/DanielMeixner/MLOps/main/model_deployment.yaml into the folder deployment. Make sure you don't mess up the formatting.
 1. Replace placeholders in this file.
     ```
     ...
