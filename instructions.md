@@ -261,7 +261,8 @@
                     echo $containerimage
                     $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
                     echo $aciname
-                    az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public
+                    az container delete --resource-group $(resourcegroup) --name $aciname --yes
+                    az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public --dns-name-label $aciname
                   
                     Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
                   addSpnToEnvironment: true
