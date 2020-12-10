@@ -232,15 +232,15 @@
 ### 3. Deploy a model to Azure Container Instances (ACI)
 1. Add another step into your azure-pipelines file to deploy to ACI. You can do this directly in Azure DevOps.
     ```
-    - stage: deploy_test
-    displayName: Deploy Model To Test
-    jobs:
-     - deployment: Test
-       environment: Test
-       strategy:
-        runOnce:
-          deploy: 
-           steps:
+- stage: deploy_test
+  displayName: Deploy Model To Test
+  jobs:
+  - deployment: Test
+    environment: Test
+    strategy:
+      runOnce:
+        deploy: 
+          steps:
               - task: DownloadPipelineArtifact@2
                 displayName: Download Registration Metadata
                 inputs:
