@@ -274,10 +274,21 @@
 1. Find the IP of your service and call your model which is now hosted on ACI using e.g. a Http Post using Postman.
 
 
-### 4. Deploy a model to Azure Kubernetes Service
+### 4. Deploy a model to Azure Kubernetes Service for production 
 1. Add another "Environment" in Azure DevOps Pipelines called "Prod". 
 1. Add your AKS Cluster as a resource to the Environment.
-1. Configure your environment to require a successful API check before deployment happens.
+1. Configure your environment to require a successful API check before deployment happens. This snippet might help you. Post to the url of the ACI you created previously.
+```
+{
+"data":
+[
+[0, 0, 0, 0],
+[1, 2, 3, 4],
+[10, 9, 8, 37]
+]
+}
+```
+
 1. Configure your environment to require manual approval before a deployment happens.
 1. Add a folder "deployment".
 1. Add the file model-deployment.yaml found here https://raw.githubusercontent.com/DanielMeixner/MLOps/main/model_deployment.yaml into the folder deployment. Make sure you don't mess up the formatting.
