@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: iris
+  labels:
+    name: iris    
+spec:
+  selector:
+    app: iris
+  type: LoadBalancer
+  ports:
+   - port: 5001
+     name: http
+     targetPort: 5001
+     protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iris
+  labels:
+    app: iris    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iris
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: iris        
+    spec:
+      containers:
+      - name: iris
+        image: YOURREGISTRY/YOURIMAGE:YOURTAG
+        ports:
+          - containerPort: 5001
+            name: http         
+            protocol: TCP
