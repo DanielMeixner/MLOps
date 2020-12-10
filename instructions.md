@@ -261,8 +261,9 @@
                     echo $containerimage
                     $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
                     echo $aciname
+                    $dnsname = "UNIQUEDNSNAME"+$modelinfo.modelname
                     az container delete --resource-group $(resourcegroup) --name $aciname --yes
-                    az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public --dns-name-label $aciname
+                    az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public --dns-name-label $dnsname
                   
                     Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
                   addSpnToEnvironment: true
@@ -276,6 +277,7 @@
 ### 4. Deploy a model to Azure Kubernetes Service
 1. Add another "Environment" in Azure DevOps Pipelines called "Prod". 
 1. Add your AKS Cluster as a resource to the Environment.
+1. Configure your environment to require a successful API check before deployment happens.
 1. Configure your environment to require manual approval before a deployment happens.
 1. Add a folder "deployment".
 1. Add the file model-deployment.yaml found here https://raw.githubusercontent.com/DanielMeixner/MLOps/main/model_deployment.yaml into the folder deployment. Make sure you don't mess up the formatting.
@@ -336,7 +338,7 @@
     ```
 1. Adjust some placeholders if required.
 1. Save the file and push it.
-1. Find the IP of your service and call your model which is now hosted on ACI using e.g. a Http Post using Postman.
+1. Find the IP of your service and call your model which is now hosted on AKS using e.g. a Http Post using Postman.
 1. To find your IP run 
     ```
     az aks get-credentials -n CLUSTERNAME -g RESOURCEGROUPNAME
