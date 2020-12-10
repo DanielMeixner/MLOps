@@ -276,55 +276,13 @@
 1. Add another "Environment" in Azure DevOps Pipelines called "Prod". 
 1. Add your AKS Cluster as a resource to the Environment.
 1. Configure your environment to require manual approval before a deployment happens.
-1. Add a folder deployment.
-1. Add a file model-deployment.yaml in this folder with this content.
+1. Add a folder "deployment".
+1. Add the file model-deployment found in this repository in the folder deployment.
+1. Replace placeholders in this file.
     ```
-apiVersion: v1
-kind: Service
-metadata:
-name: iris
-labels:
-    name: iris    
-spec:
-selector:
-    app: iris
-type: LoadBalancer
-ports:
-- port: 5001
-  name: http
-  targetPort: 5001
-  protocol: TCP
----
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-name: iris
-labels:
-    app: iris    
-spec:
-    replicas: 1
-    selector:
-        matchLabels:
-        app: iris
-    minReadySeconds: 5
-    strategy:
-        type: RollingUpdate
-        rollingUpdate:
-        maxSurge: 1
-        maxUnavailable: 1
-    template:
-        metadata:
-        labels:
-            app: iris        
-        spec:
-        containers:
-        - name: iris
-          image: 121db02eefab4e648d94cd52fd67fc0a.azurecr.io/iris-model:17
-          ports:
-          - containerPort: 5001
-            name: http         
-            protocol: TCP
+    ...
+    image: YOURREGISTRY/YOURIMAGE:YOURTAG
+    ...
     ```
 1. Add another step into your azure-pipelines file to deploy to AKS. You can do this directly in Azure DevOps.
     ```
