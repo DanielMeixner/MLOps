@@ -1,4 +1,11 @@
 # MLOps Challenge
+As are result you will be able to 
+- version all changes in your jupyter notebook
+- trigger trainings and model creation in a structured manner based on code changes you consider as "good enough" to be shared 
+- trigger trainings and model creation in a structured manner based when new data shall be used by referencing the version of the dataset
+- deploy your models so they can be tested
+- deploy your models after a succesfull test to the next environment (e.g. Production)
+
 ## This challenge builds up on challenge 1. 
 You will extend the solution of challenge 1 to enable automated trainings based on Azure DevOps.  
 ### 1. Put your code into source control
@@ -356,6 +363,14 @@ You will extend the solution of challenge 1 to enable automated trainings based 
     az aks get-credentials -n CLUSTERNAME -g RESOURCEGROUPNAME
     kubectl get services on cloud shell in Azure Portal
     ```
+# Result
+As are result you are able to 
+- version all changes in your jupyter notebook
+- trigger trainings and model creation in a structured manner based on code changes you consider as "good enough" to be shared 
+- trigger trainings and model creation in a structured manner based when new data shall be used by referencing the version of the dataset
+- deploy your models so they can be tested
+- deploy your models after a succesfull test to the next environment (e.g. Production)
+
 
    
 
