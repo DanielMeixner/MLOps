@@ -1,6 +1,6 @@
 # MLOps Challenge
 ## This challenge builds up on challenge 1. 
-You will extend the solution of challenge 1 to enable automated trainings based on Azure DevOps.
+You will extend the solution of challenge 1 to enable automated trainings based on Azure DevOps.  
 ### 1. Put your code into source control
 1. Create an new project called MLOps-Iris in your Azure DevOps organisation - if you don't have any, create one on http://dev.azure.com
 1. In Azure Repos create an empty repo (without a readme file)
