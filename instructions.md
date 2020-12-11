@@ -174,7 +174,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
             displayName: Bash Script
             inputs:
             filePath: train_dataset/setup_requirements/install_requirements.sh
-            workingDirectory: /train_dataset/setup_requirements
+            workingDirectory: train_dataset/setup_requirements
         - task: AzureCLI@2
             displayName: Azure CLI train_call.py
             inputs:
@@ -182,7 +182,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
             scriptType: bash
             scriptLocation: inlineScript
             scriptPath: train_call.py
-            inlineScript: python train_call.py '$(subscriptionid)' '$(resourcegroup)' '$(workspacename)' '$(datasetname)' '$(trainingscriptname)' '$(clustername)' '$(modelname)'
+            inlineScript: python train/train_call.py '$(subscriptionid)' '$(resourcegroup)' '$(workspacename)' '$(datasetname)' '$(trainingscriptname)' '$(clustername)' '$(modelname)'
 
         - task: PublishPipelineArtifact@1
             inputs:
