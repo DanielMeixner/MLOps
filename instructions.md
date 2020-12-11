@@ -77,7 +77,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
         print("... got dataset ...")
 
         est = Estimator(
-            source_directory='./', 
+            source_directory='train', 
             entry_script=entryscript,
             script_params=script_params,
             inputs = [irisdata.as_named_input("iris")],
