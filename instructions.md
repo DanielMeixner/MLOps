@@ -11,8 +11,9 @@ You will extend the solution of challenge 1 to enable automated trainings based 
 ### 1. Put your code into source control
 1. Create an new project called MLOps-Iris in your Azure DevOps organisation - if you don't have any, create one on http://dev.azure.com
 1. In Azure Repos create an empty repo (without a readme file)
-1. Open the command line right here in this notebook (see right here on this page right to your compute drop-down box the little C:\ icon )
-1. Navigate in the commandline to the root directory of challenge 1 
+1. Open challenge 1 in your Azure ML.
+1. Open the command line right here in your notebook (see right here on this page right to your compute drop-down box the little C:\ icon )
+1. Navigate in the commandline to the root directory of challenge 1 (depends on the directory where you currently are)
     ```
     cd ../challenge_1
     ```
