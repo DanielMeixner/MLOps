@@ -11,8 +11,9 @@ You will extend the solution of challenge 1 to enable automated trainings based 
 ### 1. Put your code into source control
 1. Create an new project called MLOps-Iris in your Azure DevOps organisation - if you don't have any, create one on http://dev.azure.com
 1. In Azure Repos create an empty repo (without a readme file)
-1. Open the command line right here in this notebook (see right here on this page right to your compute drop-down box the little C:\ icon )
-1. Navigate in the commandline to the root directory of challenge 1 
+1. Open challenge 1 in your Azure ML.
+1. Open the command line right here in your notebook (see right here on this page right to your compute drop-down box the little C:\ icon )
+1. Navigate in the commandline to the root directory of challenge 1 (depends on the directory where you currently are)
     ```
     cd ../challenge_1
     ```
@@ -76,7 +77,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
         print("... got dataset ...")
 
         est = Estimator(
-            source_directory='./', 
+            source_directory='train', 
             entry_script=entryscript,
             script_params=script_params,
             inputs = [irisdata.as_named_input("iris")],
@@ -173,7 +174,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
             displayName: Bash Script
             inputs:
             filePath: train_dataset/setup_requirements/install_requirements.sh
-            workingDirectory: /train_dataset/setup_requirements
+            workingDirectory: train_dataset/setup_requirements
         - task: AzureCLI@2
             displayName: Azure CLI train_call.py
             inputs:
@@ -181,7 +182,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
             scriptType: bash
             scriptLocation: inlineScript
             scriptPath: train_call.py
-            inlineScript: python train_call.py '$(subscriptionid)' '$(resourcegroup)' '$(workspacename)' '$(datasetname)' '$(trainingscriptname)' '$(clustername)' '$(modelname)'
+            inlineScript: python train/train_call.py '$(subscriptionid)' '$(resourcegroup)' '$(workspacename)' '$(datasetname)' '$(trainingscriptname)' '$(clustername)' '$(modelname)'
 
         - task: PublishPipelineArtifact@1
             inputs:
@@ -240,6 +241,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
 ### 3. Deploy a model to Azure Container Instances (ACI)
 1. Add another step into your azure-pipelines file to deploy to ACI. You can do this directly in Azure DevOps.
     ```
+<<<<<<< HEAD
 - stage: deploy_test
   displayName: Deploy Model To Test
   jobs:
@@ -265,7 +267,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
                   inlineScript: |
                     $path = "$(Agent.TempDirectory)/modelinfo.json"
                     $modelinfo = Get-Content($path) | ConvertFrom-Json;
-                    $containerimage = "121db02eefab4e648d94cd52fd67fc0a.azurecr.io/"+$modelinfo.modelname+":"+$modelinfo.modelversion
+                    $containerimage = "YOURREGISTRY.azurecr.io/"+$modelinfo.modelname+":"+$modelinfo.modelversion
                     echo $containerimage
                     $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
                     echo $aciname
@@ -279,6 +281,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
                   
                     Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
                   addSpnToEnvironment: true
+
     ```
 1. Adjust some placeholders if required.
 1. Add additional variables for registryuser and registrypassword of your container registry.
@@ -347,7 +350,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
                 inlineScript: |
                   $path = "$(Agent.TempDirectory)/modelinfo.json"
                   $modelinfo = Get-Content($path) | ConvertFrom-Json;
-                  $containerimage = "121db02eefab4e648d94cd52fd67fc0a.azurecr.io/"+$modelinfo.modelname+":"+$modelinfo.modelversion
+                  $containerimage = "YOURREGISTRY/"+$modelinfo.modelname+":"+$modelinfo.modelversion
                   echo $containerimage
                   Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
            
