@@ -271,7 +271,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
                       $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
                       echo $aciname
                       $dnsname = "UNIQUEDNSNAME"+$modelinfo.modelname
-                      $acideletename = az container list --query "[?ipAddress.fqdn=='UNIQUEDNSNAMEiris-model.northeurope.azurecontainer.io'].{Name:name}" |convertfrom-json | ForEach-Object {$_.Name}
+                      $acideletename = az container list --query "[?ipAddress.fqdn=='$dnsname'].{Name:name}" |convertfrom-json | ForEach-Object {$_.Name}
                       if($dnsdeletename){
                         echo "$acideletename will be deleted"
                         az container delete --resource-group $(resourcegroup) --name $acideletename --yes
