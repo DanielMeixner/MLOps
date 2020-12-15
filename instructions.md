@@ -266,7 +266,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
                       inlineScript: |
                         $path = "$(Agent.TempDirectory)/modelinfo.json"
                         $modelinfo = Get-Content($path) | ConvertFrom-Json;
-                        $containerimage = "121db02eefab4e648d94cd52fd67fc0a.azurecr.io/"+$modelinfo.modelname+":"+$modelinfo.modelversion
+                        $containerimage = "YOURREGISTRY/"+$modelinfo.modelname+":"+$modelinfo.modelversion
                         echo $containerimage
                         $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
                         echo $aciname
@@ -344,7 +344,7 @@ You will extend the solution of challenge 1 to enable automated trainings based 
                 inlineScript: |
                   $path = "$(Agent.TempDirectory)/modelinfo.json"
                   $modelinfo = Get-Content($path) | ConvertFrom-Json;
-                  $containerimage = "121db02eefab4e648d94cd52fd67fc0a.azurecr.io/"+$modelinfo.modelname+":"+$modelinfo.modelversion
+                  $containerimage = "YOURREGISTRY/"+$modelinfo.modelname+":"+$modelinfo.modelversion
                   echo $containerimage
                   Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
            
