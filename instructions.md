@@ -240,49 +240,47 @@ You will extend the solution of challenge 1 to enable automated trainings based 
 1. Save the file. As a result a training should be triggered and the model will end up packaged in your Azure Container Registry.
 ### 3. Deploy a model to Azure Container Instances (ACI)
 1. Add another step into your azure-pipelines file to deploy to ACI. You can do this directly in Azure DevOps.
-    ```
-<<<<<<< HEAD
-- stage: deploy_test
-  displayName: Deploy Model To Test
-  jobs:
-  - deployment: Test
-    environment: Test
-    strategy:
-      runOnce:
-        deploy: 
-          steps:
-              - task: DownloadPipelineArtifact@2
-                displayName: Download Registration Metadata
-                inputs:
-                  source: 'current'
-                  artifactName: modelinfo
-                  targetPath: $(Agent.TempDirectory)/
-              
-              - task: AzureCLI@2
-                displayName: Deploy to ACI via Powershell
-                inputs:
-                  azureSubscription: 'dmxinternal'
-                  scriptType: 'pscore'
-                  scriptLocation: 'inlineScript'
-                  inlineScript: |
-                    $path = "$(Agent.TempDirectory)/modelinfo.json"
-                    $modelinfo = Get-Content($path) | ConvertFrom-Json;
-                    $containerimage = "YOURREGISTRY.azurecr.io/"+$modelinfo.modelname+":"+$modelinfo.modelversion
-                    echo $containerimage
-                    $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
-                    echo $aciname
-                    $dnsname = "UNIQUEDNSNAME"+$modelinfo.modelname
-                    $acideletename = az container list --query "[?ipAddress.fqdn=='UNIQUEDNSNAMEiris-model.northeurope.azurecontainer.io'].{Name:name}" |convertfrom-json | ForEach-Object {$_.Name}
-                    if($dnsdeletename){
-                      echo "$acideletename will be deleted"
-                      az container delete --resource-group $(resourcegroup) --name $acideletename --yes
-                    }
-                    az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public --dns-name-label $dnsname
-                  
-                    Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
-                  addSpnToEnvironment: true
-
-    ```
+  ```
+  - stage: deploy_test
+    displayName: Deploy Model To Test
+    jobs:
+    - deployment: Test
+      environment: Test
+      strategy:
+        runOnce:
+          deploy: 
+            steps:
+                - task: DownloadPipelineArtifact@2
+                  displayName: Download Registration Metadata
+                  inputs:
+                    source: 'current'
+                    artifactName: modelinfo
+                    targetPath: $(Agent.TempDirectory)/
+                
+                - task: AzureCLI@2
+                  displayName: Deploy to ACI via Powershell
+                  inputs:
+                    azureSubscription: 'dmxinternal'
+                    scriptType: 'pscore'
+                    scriptLocation: 'inlineScript'
+                    inlineScript: |
+                      $path = "$(Agent.TempDirectory)/modelinfo.json"
+                      $modelinfo = Get-Content($path) | ConvertFrom-Json;
+                      $containerimage = "YOURREGISTRY.azurecr.io/"+$modelinfo.modelname+":"+$modelinfo.modelversion
+                      echo $containerimage
+                      $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
+                      echo $aciname
+                      $dnsname = "UNIQUEDNSNAME"+$modelinfo.modelname
+                      $acideletename = az container list --query "[?ipAddress.fqdn=='UNIQUEDNSNAMEiris-model.northeurope.azurecontainer.io'].{Name:name}" |convertfrom-json | ForEach-Object {$_.Name}
+                      if($dnsdeletename){
+                        echo "$acideletename will be deleted"
+                        az container delete --resource-group $(resourcegroup) --name $acideletename --yes
+                      }
+                      az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public --dns-name-label $dnsname
+                    
+                      Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
+                    addSpnToEnvironment: true
+  ```
 1. Adjust some placeholders if required.
 1. Add additional variables for registryuser and registrypassword of your container registry.
 1. Save the file and push it if you didn't work in Azure DevOps.
