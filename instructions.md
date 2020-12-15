@@ -271,12 +271,12 @@ You will extend the solution of challenge 1 to enable automated trainings based 
                       $aciname = $modelinfo.modelname+"-"+$modelinfo.modelversion
                       echo $aciname
                       $dnsname = "UNIQUEDNSNAME"+$modelinfo.modelname
-                      $acideletename = az container list --query "[?ipAddress.fqdn=='$dnsname'].{Name:name}" |convertfrom-json | ForEach-Object {$_.Name}
-                      if($acideletename){
-                        echo "$acideletename will be deleted"
-                        az container delete --resource-group $(resourcegroup) --name $acideletename --yes
-                      }
-                      az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public --dns-name-label $dnsname
+                      #$acideletename = az container list --query "[?ipAddress.fqdn=='$dnsname'].{Name:name}" |convertfrom-json | ForEach-Object {$_.Name}
+                      #if($acideletename){
+                      #  echo "$acideletename will be deleted"
+                      #  az container delete --resource-group $(resourcegroup) --name $acideletename --yes
+                      #}
+                      az container create --resource-group $(resourcegroup) --name $aciname --image $containerimage --cpu 2 --memory 2  --ports 5001 --registry-password $(registrypassword) --registry-username $(registryuser) --ip-address public 
                     
                       Write-Host "##vso[task.setvariable variable=containerimage;]$containerimage"
                     addSpnToEnvironment: true
